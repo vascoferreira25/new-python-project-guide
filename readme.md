@@ -1,6 +1,6 @@
 # Python
 
-The easiest and way to start a project is with Poetry, as it creates all the
+The easiest way to start a new project is with Poetry, as it creates all the
 necessary folders and starts a virtual environment to keep all the code
 working.
 
