@@ -1,26 +1,25 @@
 # Python
 
-The easiest and way to start a project is with Poetry, as it creates all
-the necessary folders and starts a virtual environment to keep all the
-code working.
+The easiest and way to start a project is with Poetry, as it creates all the
+necessary folders and starts a virtual environment to keep all the code
+working.
 
 Steps to a create a new Python project:
 
-1.  Create a project with [Poetry](#poetry-start) and `cd` into the
-    project folder
+1.  Create a project with [Poetry](#create-a-project) and `cd` into the project
+    folder
 2.  Init the git repository with `git init`
 3.  Create a `__main__` file with a `main` function that will start the
-    program, check this [main file](#poetry-main-file)
-4.  Change the [pyproject.toml](#poetry-project-main) to include the
-    `__main__` file and `main` function
-5.  Write the functions that you need to run in other files - this will
-    be usefull when [testing](#testing)
-6.  Setup [Mkdocs](#mkdocs-start) for documentation and API
-    documentation
+    program, check this [main file](#main-file)
+4.  Change the [pyproject.toml](#pyproject-settings) to include the `__main__`
+    file and `main` function
+5.  Write the functions that you need to run in other files - this will be
+    usefull when [testing](#testing)
+6.  Setup [Mkdocs](#mkdocs) for documentation and API documentation
 7.  Check the documentation with `mkdocs serve`
 8.  Run the project with `poetry run main`
 
-# Poetry - Virtual Environment Manager
+## Poetry - Virtual Environment Manager
 
 ### Install on Windows
 
@@ -43,8 +42,6 @@ poetry self update
 ### Create a project
 
 Names with `-` will have the folders\' names replaced with underscores.
-
-[]{#poetry-start}
 
 ``` {.shell}
 poetry new [project-name]
@@ -126,7 +123,15 @@ poetry build
 
 ### Run package
 
-[]{#poetry-main-file}
+Setup the `__main__.py` and `pyproject.toml` files and then run:
+
+Run the project:
+
+``` {.shell}
+poetry run main
+```
+
+#### main file
 
 Create a `__main__.py` file with the code to run, for example:
 
@@ -141,7 +146,7 @@ if __name__ == '__main__':
     main()
 ```
 
-[]{#poetry-project-main}
+#### pyproject settings
 
 Add the following to the `pyproject.toml`, just before the
 `[build-system]` and replace the `project_name`:
@@ -151,19 +156,13 @@ Add the following to the `pyproject.toml`, just before the
 main = "project_name.__main__:main"
 ```
 
-Run the project:
-
-``` {.shell}
-poetry run main
-```
-
 ### Run tests
 
 ``` {.shell}
 poetry run pytest
 ```
 
-### Run file
+### Run a single file
 
 ``` {.shell}
 poetry run python ./path/to/file.py
@@ -184,27 +183,24 @@ package-name
    |- package_name
       |- __init__.py
       |- __main__.py
-      |- *.py
+      |- ... # your python files
       |- module
          |- __init__.py
          |- *.py
 ```
 
-Create a file called `__main__.py` in the `package_name` folder to allow
-the usage of `python -m package_name` to run the project.
+Create a file called `__main__.py` in the `package_name` folder to allow the
+usage of `python -m package_name` to run the project.
 
 You can create more folders:
 
 -   `out` for the output of your program,
 -   `resources` for files needed by your program.
 
-::: {.WARNING}
-If you don\'t run the package with the `-m` arg, it will raise an error
-saying it can\'t run relative imports. Don\'t use `./` either.
-:::
+**Note**: If you don\'t run the package with the `-m` arg, it will raise an
+error saying it can\'t run relative imports. Don\'t use `./` either.
 
-Documentation
--------------
+## Documentation
 
 ### Google Style
 
@@ -290,34 +286,28 @@ Documentation
 
 ### Mkdocs
 
-[]{#mkdocs-start}
-
 1.  Install mkdocs (if needed)
-2.  Install themes and extensions ([if
-    needed](#mkdocs-themes-extensions))
+2.  Install themes and extensions ([if needed](#themes-and-extensions))
 3.  Create a mkdocs site with `mkdocs new .`
 4.  Edit the `mkdocs.yml` to setup themes and extensions - [like
-    this](#mkdocs-config)
+    this](#mkdocs-configuration)
 5.  Add modules to the docs with [Autodoc](#mkdocs-autodoc)
 6.  Serve the docs with `mkdocs serve`
 
-<!-- -->
 
-1.  Install
+####  Install
 
     ``` {.shell}
     pip install mkdocs
     ```
 
-2.  Create docs
+#### Create docs
 
     ``` {.shell}
     mkdocs new .
     ```
 
-3.  Themes and Extensions
-
-    []{#mkdocs-themes-extensions}
+#### Themes and Extensions
 
     ``` {.shell}
     pip install mkdocstrings
@@ -325,9 +315,7 @@ Documentation
     pip install mkdocs-gitbook
     ```
 
-4.  Configuration
-
-    []{#mkdocs-config}
+#### Mkdocs Configuration
 
     ``` {.yml}
     site_name: My Docs
@@ -373,7 +361,7 @@ Documentation
             - ./
     ```
 
-5.  Custom CSS
+#### Custom CSS
 
     ``` {.css}
     .doc-heading {
@@ -398,15 +386,13 @@ Documentation
     }
     ```
 
-6.  Serve docs
+#### Serve docs
 
     ``` {.shell}
     mkdocs serve
     ```
 
-7.  Autodoc
-
-    []{#mkdocs-autodoc}
+#### Autodoc
 
     Add this to the `.md` file:
 
@@ -415,10 +401,7 @@ Documentation
     ::: project_name.file
     ```
 
-Testing
--------
-
-[]{#testing}
+### Testing
 
 Steps:
 
@@ -429,10 +412,8 @@ Steps:
     inside your modules
 4.  Run `pytest -vv` and check for errors
 
-::: {.TIP}
-Try to split your code into pure functions (no side effects and no
+**Note**: Try to split your code into pure functions (no side effects and no
 global variables) to make it easier to write tests.
-:::
 
 ### Install pytest
 
