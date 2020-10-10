@@ -1,4 +1,43 @@
-# Python
+# How to create a new Python project
+
+Create a Python project with `Poetry`, `Mkdocs` and `Pytest`. This will allow
+you to manage environments, documentation and testing of your Python projects.
+
+## Table of Contents
+
+- [Steps](#steps)
+- [Poetry - Virtual Environment Manager](#poetry---virtual-environment-manager)
+    - [Install on Windows](#install-on-windows)
+    - [Create a project](#create-a-project)
+    - [Dependencies](#dependencies)
+    - [Environment](#environment)
+    - [Build package](#build-package)
+    - [Run package](#run-package)
+        - [main file](#main-file)
+        - [pyproject settings](#pyproject-settings)
+    - [Run tests](#run-tests)
+    - [Run a single file](#run-a-single-file)
+    - [Project structure](#project-structure)
+- [Documentation](#documentation)
+    - [Google Style](#google-style)
+    - [Mkdocs](#mkdocs)
+        - [Install](#install)
+        - [Create docs](#create-docs)
+        - [Themes and Extensions](#themes-and-extensions)
+        - [Mkdocs Configuration](#mkdocs-configuration)
+        - [Custom CSS](#custom-css)
+        - [Serve docs](#serve-docs)
+        - [Autodoc](#autodoc)
+- [Testing](#testing)
+    - [Install pytest](#install-pytest)
+    - [Simple usage](#simple-usage)
+    - [Assert exceptions](#assert-exceptions)
+    - [Group](#group)
+    - [Run](#run)
+    - [Detailed summary](#detailed-summary)
+    - [Run with poetry](#run-with-poetry)
+
+## Steps
 
 The easiest way to start a new project is with Poetry, as it creates all the
 necessary folders and starts a virtual environment to keep all the code
@@ -401,7 +440,7 @@ error saying it can\'t run relative imports. Don\'t use `./` either.
     ::: project_name.file
     ```
 
-### Testing
+## Testing
 
 Steps:
 
@@ -414,7 +453,7 @@ Steps:
 
 **Note**: Try to split your code into pure functions (no side effects and no
 global variables) to make it easier to write tests.
-
+    
 ### Install pytest
 
 ``` {.shell}
