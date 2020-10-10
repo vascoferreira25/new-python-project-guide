@@ -10,7 +10,16 @@ you to manage environments, documentation and testing of your Python projects.
     - [Install on Windows](#install-on-windows)
     - [Create a project](#create-a-project)
     - [Dependencies](#dependencies)
+        - [Add and remove dependencies](#add-and-remove-dependencies)
+        - [Install the environment](#install-the-environment)
+        - [Show installed dependencies](#show-installed-dependencies)
+        - [Update dependencies](#update-dependencies)
     - [Environment](#environment)
+        - [Show info about environments](#show-info-about-environments)
+        - [Remove the current project environment](#remove-the-current-project-environment)
+        - [List all environments](#list-all-environments)
+        - [Activate the environment](#activate-the-environment)
+        - [Activate system environment](#activate-system-environment)
     - [Build package](#build-package)
     - [Run package](#run-package)
         - [main file](#main-file)
@@ -20,6 +29,8 @@ you to manage environments, documentation and testing of your Python projects.
     - [Project structure](#project-structure)
 - [Documentation](#documentation)
     - [Google Style](#google-style)
+        - [Module documentation](#module-documentation)
+        - [Function documentation](#function-documentation)
     - [Mkdocs](#mkdocs)
         - [Install](#install)
         - [Create docs](#create-docs)
@@ -29,13 +40,11 @@ you to manage environments, documentation and testing of your Python projects.
         - [Serve docs](#serve-docs)
         - [Autodoc](#autodoc)
 - [Testing](#testing)
-    - [Install pytest](#install-pytest)
     - [Simple usage](#simple-usage)
     - [Assert exceptions](#assert-exceptions)
     - [Group](#group)
     - [Run](#run)
     - [Detailed summary](#detailed-summary)
-    - [Run with poetry](#run-with-poetry)
 
 ## Steps
 
@@ -45,15 +54,14 @@ working.
 
 Steps to a create a new Python project:
 
-1.  Create a project with [Poetry](#create-a-project) and `cd` into the project
+1.  Create a project with [Poetry](#create-a-project): `poetry new project-name` and `cd` into the project
     folder
 2.  Init the git repository with `git init`
 3.  Create a `__main__` file with a `main` function that will start the
-    program, check this [main file](#main-file)
-4.  Change the [pyproject.toml](#pyproject-settings) to include the `__main__`
-    file and `main` function
-5.  Write the functions that you need to run in other files - this will be
-    usefull when [testing](#testing)
+    program (check this [main file](#main-file))
+4.  Change the `pyproject.toml` file to include the `__main__` file and `main`
+    function (check this [pyproject.toml](#pyproject-settings))
+5.  Write functions and test them with [Pytest](#testing)
 6.  Setup [Mkdocs](#mkdocs) for documentation and API documentation
 7.  Check the documentation with `mkdocs serve`
 8.  Run the project with `poetry run main`
@@ -88,71 +96,71 @@ poetry new [project-name]
 
 ### Dependencies
 
-1.  Add and remove dependencies
+#### Add and remove dependencies
 
-    ``` {.shell}
-    poetry add [package-name]
-    ```
+``` {.shell}
+poetry add [package-name]
+```
 
-    ``` {.shell}
-    poetry remove [package-name]
-    ```
+``` {.shell}
+poetry remove [package-name]
+```
 
-    Some packages may need more args to install, for example `Pytorch`:
+Some packages may need more options to be installed, for example `Pytorch`:
 
-    ``` {.shell}
-    poetry add torch===1.6.0 --platform windows
-    ```
+``` {.shell}
+poetry add torch===1.6.0 --platform windows
+```
 
-2.  Install dependencies
+#### Install the environment
 
-    ``` {.shell}
-    poetry install
-    ```
+``` {.shell}
+poetry install
+```
 
-3.  Show installed dependencies
+#### Show installed dependencies
 
-    ``` {.shell}
-    poetry show --tree
-    ```
+``` {.shell}
+poetry show --tree
+```
 
-4.  Update dependencies
+#### Update dependencies
 
-    ``` {.shell}
-    poetry update
-    ```
+``` {.shell}
+poetry update
+```
 
 ### Environment
 
-1.  Info
+#### Show info about environments
 
-    ``` {.shell}
-    poetry env info
-    ```
+``` {.shell}
+poetry env info
+```
 
-2.  Remove
+#### Remove the current project environment
 
-    ``` {.shell}
-    poetry env remove python
-    ```
+``` {.shell}
+poetry env remove python
+```
 
-3.  List
+#### List all environments
 
-    ``` {.shell}
-    poetry env list
-    ```
+``` {.shell}
+poetry env list
+```
 
-4.  Activate
+#### Activate the environment
 
-    ``` {.shell}
-    poetry env use ./path/to/env
-    ```
+``` {.shell}
+poetry env use ./path/to/env
+```
 
-5.  Activate system environment
+#### Activate system environment
 
-    ``` {.shell}
-    poetry env use system
-    ```
+``` {.shell}
+poetry env use system
+```
 
 ### Build package
 
@@ -187,8 +195,8 @@ if __name__ == '__main__':
 
 #### pyproject settings
 
-Add the following to the `pyproject.toml`, just before the
-`[build-system]` and replace the `project_name`:
+Add the following to the `pyproject.toml`, just before the `[build-system]` and
+replace the `project_name` with the name of your project:
 
 ``` {.toml}
 [tool.poetry.scripts]
@@ -217,7 +225,7 @@ package-name
 |- poetry.lock
 |- pyproject.toml
 |- tests
-   |- *.py
+   |- ... # your test files
 |- package_name
    |- package_name
       |- __init__.py
@@ -225,7 +233,7 @@ package-name
       |- ... # your python files
       |- module
          |- __init__.py
-         |- *.py
+         |- ... # module files
 ```
 
 Create a file called `__main__.py` in the `package_name` folder to allow the
@@ -243,85 +251,85 @@ error saying it can\'t run relative imports. Don\'t use `./` either.
 
 ### Google Style
 
-1.  Module documentation
+#### Module documentation
 
-    ```` {.python}
-    """Example Google style docstrings.
+```` {.python}
+"""Example Google style docstrings.
 
-    This module demonstrates documentation as specified by the `Google Python
-    Style Guide`. Docstrings may extend over multiple lines. Sections are created
-    with a section header and a colon followed by a block of indented text.
+This module demonstrates documentation as specified by the `Google Python
+Style Guide`. Docstrings may extend over multiple lines. Sections are created
+with a section header and a colon followed by a block of indented text.
 
-    Example:
-        Examples can be given using either the `Example` or `Examples`
-        sections. Sections support any reStructuredText formatting, including
-        literal blocks::
+Example:
+    Examples can be given using either the `Example` or `Examples`
+    sections. Sections support any reStructuredText formatting, including
+    literal blocks::
 
+    ```python
+    python example_google.py
+    ```
+
+Section breaks are created by resuming unindented text. Section breaks
+are also implicitly created anytime a new section starts.
+
+Attributes:
+    module_level_variable1 (int): Module level variables may be documented in
+        either the `Attributes` section of the module docstring, or in an
+        inline docstring immediately following the variable.
+        Either form is acceptable, but the two should not be mixed. Choose
+        one convention to document module level variables and be consistent
+        with it.
+
+!!! todo "A todo"
+    Todo this
+
+!!! bug "A note"
+    A simple note
+
+??? summary "Hidden notes"
+    This is hidden
+
+??? tip "These are all the fields"
+    - note
+    - summary
+    - todo, info
+    - tip
+    - done
+    - question
+    - warning
+    - fail
+    - danger
+    - bug
+    - example
+    - quote
+"""
+````
+
+#### Function documentation
+
+```` {.python}
+def function_with_types_in_docstring(param1=1, param2=2):
+    """Example function with types documented in the docstring.
+
+    `PEP 484` type annotations are supported. If attribute, parameter, and
+    return types are annotated according to `PEP 484`, they do not need to be
+    included in the docstring.
+
+    Args:
+        param1 (int): The first parameter.
+        param2 (str): The second parameter.
+
+    Returns:
+        tupple(str, str): ret1 description, ret2 destription.
+
+        Examples:
         ```python
-        python example_google.py
+        # Run the function
+        function_with_types_in_docstring(param1, param2)
         ```
-
-    Section breaks are created by resuming unindented text. Section breaks
-    are also implicitly created anytime a new section starts.
-
-    Attributes:
-        module_level_variable1 (int): Module level variables may be documented in
-            either the `Attributes` section of the module docstring, or in an
-            inline docstring immediately following the variable.
-            Either form is acceptable, but the two should not be mixed. Choose
-            one convention to document module level variables and be consistent
-            with it.
-
-    !!! todo "A todo"
-        Todo this
-
-    !!! bug "A note"
-        A simple note
-
-    ??? summary "Hidden notes"
-        This is hidden
-
-    ??? tip "These are all the fields"
-        - note
-        - summary
-        - todo, info
-        - tip
-        - done
-        - question
-        - warning
-        - fail
-        - danger
-        - bug
-        - example
-        - quote
     """
-    ````
-
-2.  Function documentation
-
-    ```` {.python}
-    def function_with_types_in_docstring(param1=1, param2=2):
-        """Example function with types documented in the docstring.
-
-        `PEP 484` type annotations are supported. If attribute, parameter, and
-        return types are annotated according to `PEP 484`, they do not need to be
-        included in the docstring.
-
-        Args:
-            param1 (int): The first parameter.
-            param2 (str): The second parameter.
-
-        Returns:
-            tupple(str, str): ret1 description, ret2 destription.
-
-         Examples:
-            ```python
-            # Run the function
-            function_with_types_in_docstring(param1, param2)
-            ```
-        """
-        pass
-    ````
+    pass
+````
 
 ### Mkdocs
 
@@ -336,109 +344,116 @@ error saying it can\'t run relative imports. Don\'t use `./` either.
 
 ####  Install
 
-    ``` {.shell}
-    pip install mkdocs
-    ```
+``` {.shell}
+poetry add mkdocs
+```
 
 #### Create docs
 
-    ``` {.shell}
-    mkdocs new .
-    ```
+``` {.shell}
+poetry run mkdocs new .
+```
 
 #### Themes and Extensions
 
-    ``` {.shell}
-    pip install mkdocstrings
-    pip install mkdocs-material
-    pip install mkdocs-gitbook
-    ```
+``` {.shell}
+poetry add mkdocstrings
+poetry add mkdocs-material
+```
 
 #### Mkdocs Configuration
 
-    ``` {.yml}
-    site_name: My Docs
+``` {.yml}
+site_name: My Docs
 
-    theme:
-      name: "material"
-      highlightjs: true
-      hljs_languages:
-        - python
+theme:
+    name: "material"
+    highlightjs: true
+    hljs_languages:
+    - python
 
-    extra_css:
-      - styles.css
+extra_css:
+    - styles.css
 
-    extra_javascript: 
-      - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+extra_javascript: 
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
-    markdown_extensions:
-      - admonition
-      - codehilite
-      - toc
-      - def_list
-      - abbr
-      - attr_list
-      - tables
-      - pymdownx.arithmatex
-      - pymdownx.details
-      - pymdownx.superfences
+markdown_extensions:
+    - admonition
+    - codehilite
+    - toc
+    - def_list
+    - abbr
+    - attr_list
+    - tables
+    - pymdownx.arithmatex
+    - pymdownx.details
+    - pymdownx.superfences
 
-    plugins:
-      - search
-      - mkdocstrings:
-          default_handler: python
-          handlers:
-            python:
-              rendering:
-                show_source: true 
-                show_root_heading: true
-                show_category_heading: true
-                show_object_full_path: false
-                show_if_no_docstring: true
-          custom_templates: templates
-          watch:
-            - ./
-    ```
+plugins:
+    - search
+    - mkdocstrings:
+        default_handler: python
+        handlers:
+        python:
+            rendering:
+            show_source: true 
+            show_root_heading: true
+            show_category_heading: true
+            show_object_full_path: false
+            show_if_no_docstring: true
+        custom_templates: templates
+        watch:
+        - ./
+```
 
 #### Custom CSS
 
-    ``` {.css}
-    .doc-heading {
-        background-color: rgba(64, 81, 181, 0.15);
-        padding: 8px;
-        border-radius: 4px;
-        border-left: 4px solid rgb(64, 81, 181);
-    }
+Create a file `docs/styles.css` to hold your CSS settings:
 
-    .doc-heading {
-        margin-top: 72px;
-    }
+``` {.css}
+.doc-heading {
+    background-color: rgba(64, 81, 181, 0.15);
+    padding: 8px;
+    border-radius: 4px;
+    border-left: 4px solid rgb(64, 81, 181);
+}
 
-    .doc-module > .doc-contents {
-        padding-left: 24px;
-    }
+.doc-heading {
+    margin-top: 72px;
+}
 
-    .doc-class > .doc-contents, .doc-method > .doc-contents, .doc-function > .doc-contents {
-        margin-bottom: 64px;
-        padding-left: 24px;
-        border-left: 2px solid rgba(64, 81, 181, 0.2);
-    }
-    ```
+.doc-module > .doc-contents {
+    padding-left: 24px;
+}
+
+.doc-class > .doc-contents, .doc-method > .doc-contents, .doc-function > .doc-contents {
+    margin-bottom: 64px;
+    padding-left: 24px;
+    border-left: 2px solid rgba(64, 81, 181, 0.2);
+}
+```
 
 #### Serve docs
 
-    ``` {.shell}
-    mkdocs serve
-    ```
+``` {.shell}
+poetry run mkdocs serve
+```
 
 #### Autodoc
 
-    Add this to the `.md` file:
+Add this to the `.md` file to show specific modules:
 
-    ``` {.markdown}
-    ::: project_name.submodule.file
-    ::: project_name.file
-    ```
+``` {.markdown}
+::: project_name.submodule.file
+::: project_name.file
+```
+
+or this to show all the documentation of the project:
+
+```markdown
+::: project_name
+```
 
 ## Testing
 
@@ -454,12 +469,6 @@ Steps:
 **Note**: Try to split your code into pure functions (no side effects and no
 global variables) to make it easier to write tests.
     
-### Install pytest
-
-``` {.shell}
-pip install pytest
-```
-
 ### Simple usage
 
 ``` {.python}
@@ -505,17 +514,11 @@ class TestClass:
 ### Run
 
 ``` {.shell}
-pytest
+poetry run pytest
 ```
 
 ### Detailed summary
 
 ``` {.shell}
-pytest -vv [-rA --durations=0]
-```
-
-### Run with poetry
-
-``` {.shell}
-poetry run pytest -vv
+poetry run pytest -vv [-rA --durations=0]
 ```

@@ -1,0 +1,3 @@
+[submodule "example-project"]
+	path = example-project
+	url = ./example-project/
