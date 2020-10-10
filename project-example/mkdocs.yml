@@ -1,0 +1,41 @@
+site_name: My Docs
+
+theme:
+  name: "material"
+  highlightjs: true
+  hljs_languages:
+    - python
+
+extra_css:
+  - styles.css
+
+extra_javascript: 
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc
+  - def_list
+  - abbr
+  - attr_list
+  - tables
+  - pymdownx.arithmatex
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true 
+            show_root_heading: true
+            show_category_heading: true
+            show_object_full_path: false
+            show_if_no_docstring: true
+      custom_templates: templates
+      watch:
+        - ./
